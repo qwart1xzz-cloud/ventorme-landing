@@ -3,25 +3,48 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Ventorme — Поступи на грант без нервотрепки</title>
+  <title>Ventorme — Твой легкий путь к гранту ЕНТ 2026</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #F8FAFC;
-      --card: #FFFFFF;
-      --text: #0F172A;
-      --muted: #64748B;
-      --border: #E2E8F0;
+      --bg: #0F172A; /* Перешли на стильный темный геймерский дизайн */
+      --card: #1E293B;
+      --text: #F8FAFC;
+      --muted: #94A3B8;
+      --border: #334155;
       --accent: #6366F1;
       --accent-hover: #4F46E5;
-      --accent-light: #EEF2FF;
+      --accent-glow: rgba(99, 102, 241, 0.4);
       --green: #10B981;
-      --green-bg: rgba(16, 185, 129, 0.1);
+      --green-bg: rgba(16, 185, 129, 0.15);
+      --neon-blue: #06B6D4;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    @keyframes pulse-glow {
+      0% { box-shadow: 0 0 5px var(--accent-glow); }
+      50% { box-shadow: 0 0 20px var(--accent-glow); }
+      100% { box-shadow: 0 0 5px var(--accent-glow); }
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-6px); }
+      100% { transform: translateY(0px); }
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes confetti {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100px) rotate(360deg); opacity: 0; }
+    }
 
     body {
       background-color: var(--bg);
@@ -29,6 +52,7 @@
       font-family: 'Manrope', sans-serif;
       line-height: 1.5;
       padding-bottom: 80px;
+      overflow-x: hidden;
     }
 
     .wrap {
@@ -48,46 +72,58 @@
     }
 
     .logo {
-      font-size: 18px;
+      font-size: 20px;
       font-weight: 800;
       color: var(--text);
       text-decoration: none;
+      letter-spacing: -0.5px;
     }
 
     .logo span { color: var(--accent); }
 
-    /* Большая солидная кнопка в шапке */
     .header-btn {
       background: linear-gradient(135deg, #6366F1 0%, #4F46E5 100%);
       color: #ffffff;
-      padding: 12px 20px;
+      padding: 12px 24px;
       border-radius: 14px;
       font-size: 14px;
       font-weight: 800;
       text-decoration: none;
-      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.35);
+      box-shadow: 0 0 15px rgba(99, 102, 241, 0.4);
       display: flex;
       align-items: center;
-      gap: 8px;
-      transition: transform 0.15s ease;
+      gap: 10px;
+      transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s;
+      animation: pulse-glow 3s infinite ease-in-out;
     }
 
-    .header-btn:active { transform: scale(0.97); }
+    .header-btn:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 0 25px rgba(99, 102, 241, 0.6);
+    }
 
     .header-btn .arrow {
       font-size: 18px;
       font-weight: 900;
-      line-height: 1;
+      display: inline-block;
+      transition: transform 0.2s;
+    }
+
+    .header-btn:hover .arrow {
+      transform: translateX(4px);
     }
 
     /* Hero */
     .hero {
       text-align: center;
       margin-bottom: 32px;
+      animation: slideIn 0.8s ease-out;
     }
 
     .badge {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       background: var(--green-bg);
       color: var(--green);
       font-size: 12px;
@@ -95,89 +131,187 @@
       padding: 6px 14px;
       border-radius: 20px;
       margin-bottom: 14px;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      animation: float 4s infinite ease-in-out;
     }
 
     .hero h1 {
-      font-size: clamp(26px, 5vw, 36px);
+      font-size: clamp(28px, 6vw, 38px);
       font-weight: 800;
       letter-spacing: -0.02em;
       line-height: 1.2;
       margin-bottom: 12px;
+      background: linear-gradient(to right, #FFF, #94A3B8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
     .hero p {
       font-size: 15px;
       color: var(--muted);
-      max-width: 460px;
+      max-width: 480px;
       margin: 0 auto;
     }
 
-    /* Interactive Widget */
+    /* Interactive Gamified Widget */
     .interactive-card {
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 20px;
+      border-radius: 24px;
       padding: 24px 20px;
       margin-bottom: 24px;
-      box-shadow: 0 10px 30px -10px rgba(0,0,0,0.05);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      transition: border-color 0.3s;
+    }
+
+    .interactive-card:hover {
+      border-color: var(--accent);
     }
 
     .card-title {
       font-size: 16px;
       font-weight: 700;
-      margin-bottom: 14px;
+      margin-bottom: 18px;
       display: flex;
       align-items: center;
       gap: 8px;
     }
 
+    .card-title .glow-dot {
+      width: 8px;
+      height: 8px;
+      background: #06B6D4;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #06B6D4;
+    }
+
+    /* Range Slider */
+    .slider-box {
+      background: rgba(15, 23, 42, 0.4);
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 18px;
+      border: 1px solid var(--border);
+    }
+
+    .slider-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--muted);
+    }
+
+    .score-value {
+      font-size: 20px;
+      color: var(--neon-blue);
+      text-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
+    }
+
+    input[type=range] {
+      -webkit-appearance: none;
+      width: 100%;
+      background: transparent;
+    }
+
+    input[type=range]::-webkit-slider-runnable-track {
+      width: 100%;
+      height: 8px;
+      cursor: pointer;
+      background: #334155;
+      border-radius: 4px;
+    }
+
+    input[type=range]::-webkit-slider-thumb {
+      height: 20px;
+      width: 20px;
+      border-radius: 50%;
+      background: var(--accent);
+      cursor: pointer;
+      -webkit-appearance: none;
+      margin-top: -6px;
+      box-shadow: 0 0 10px var(--accent);
+      transition: transform 0.1s;
+    }
+
+    input[type=range]::-webkit-slider-thumb:hover {
+      transform: scale(1.2);
+    }
+
+    /* Grid Options */
     .options-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 10px;
-      margin-bottom: 14px;
+      margin-bottom: 18px;
     }
 
     .opt-btn {
-      background: #F8FAFC;
+      background: #0F172A;
       border: 1.5px solid var(--border);
-      border-radius: 12px;
-      padding: 12px;
+      border-radius: 14px;
+      padding: 14px 12px;
       font-family: inherit;
       font-size: 14px;
-      font-weight: 600;
+      font-weight: 700;
       color: var(--text);
       cursor: pointer;
       text-align: left;
-      transition: all 0.2s;
+      transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
     }
 
-    .opt-btn:hover, .opt-btn.active {
+    .opt-btn:hover {
+      transform: translateY(-2px);
       border-color: var(--accent);
-      background: var(--accent-light);
-      color: var(--accent);
+      background: rgba(99, 102, 241, 0.1);
     }
 
+    .opt-btn.active {
+      border-color: var(--accent);
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(79, 70, 229, 0.1) 100%);
+      color: #FFF;
+      box-shadow: 0 0 15px rgba(99, 102, 241, 0.25);
+    }
+
+    /* Dynamic AI chat result */
     .interactive-result {
-      background: #F1F5F9;
-      border-radius: 12px;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--border);
+      border-radius: 16px;
       padding: 16px;
       font-size: 14px;
       color: var(--muted);
       text-align: left;
-      margin-top: 10px;
-      line-height: 1.5;
+      position: relative;
+      transition: all 0.3s ease;
     }
 
-    .interactive-result b {
-      color: var(--text);
+    .ai-typing-indicator {
+      display: none;
+      align-items: center;
+      gap: 4px;
+      margin-top: 8px;
     }
 
-    /* Features list */
+    .dot {
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: float 1s infinite ease-in-out;
+    }
+    .dot:nth-child(2) { animation-delay: 0.2s; }
+    .dot:nth-child(3) { animation-delay: 0.4s; }
+
+    /* Features List */
     .features-box {
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 20px;
+      border-radius: 24px;
       padding: 24px 20px;
       margin-bottom: 24px;
     }
@@ -185,34 +319,40 @@
     .features-box h3 {
       font-size: 16px;
       font-weight: 700;
-      margin-bottom: 16px;
+      margin-bottom: 18px;
     }
 
     .feat-row {
       display: flex;
       align-items: flex-start;
-      gap: 12px;
-      margin-bottom: 14px;
+      gap: 14px;
+      margin-bottom: 16px;
+      transition: transform 0.2s;
+    }
+
+    .feat-row:hover {
+      transform: translateX(4px);
     }
 
     .feat-row:last-child { margin-bottom: 0; }
 
     .feat-icon {
       font-size: 20px;
-      background: var(--accent-light);
-      width: 36px;
-      height: 36px;
-      border-radius: 10px;
+      background: rgba(99, 102, 241, 0.15);
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
+      border: 1px solid rgba(99, 102, 241, 0.2);
     }
 
     .feat-text h4 {
       font-size: 14px;
       font-weight: 700;
-      margin-bottom: 2px;
+      margin-bottom: 3px;
     }
 
     .feat-text p {
@@ -222,38 +362,56 @@
 
     /* Main CTA Box */
     .cta-box {
-      background: linear-gradient(135deg, #4F46E5 0%, #6366F1 100%);
+      background: linear-gradient(135deg, #4F46E5 0%, #312E81 100%);
       color: #fff;
-      border-radius: 20px;
-      padding: 28px 20px;
+      border-radius: 24px;
+      padding: 32px 24px;
       text-align: center;
-      box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.3);
+      box-shadow: 0 20px 40px -10px rgba(79, 70, 229, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-box::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.4) 0%, transparent 70%);
+      pointer-events: none;
     }
 
     .cta-box h2 {
-      font-size: 20px;
+      font-size: 22px;
       font-weight: 800;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
 
     .cta-box p {
       font-size: 13px;
-      opacity: 0.9;
-      margin-bottom: 20px;
+      color: #C7D2FE;
+      margin-bottom: 24px;
     }
 
     .btn-main {
       display: block;
       width: 100%;
       background: #FFFFFF;
-      color: var(--accent);
-      padding: 14px;
-      border-radius: 12px;
-      font-size: 15px;
+      color: #4F46E5;
+      padding: 16px;
+      border-radius: 14px;
+      font-size: 16px;
       font-weight: 800;
       text-decoration: none;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      transition: transform 0.1s;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+      transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s;
+    }
+
+    .btn-main:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(255, 255, 255, 0.2);
     }
 
     .btn-main:active { transform: scale(0.98); }
@@ -273,8 +431,7 @@
     <header>
       <a href="#" class="logo">Ventorme<span>.ai</span></a>
       
-      <!-- Увеличенная яркая кнопка входа со стрелкой -->
-      <!-- ВАЖНО: Замени team-017 на реальный номер своей команды -->
+      <!-- ВАЖНО: Замени team-122 на твой реальный номер команды -->
       <a href="https://ventorme.ai/register?utm_source=hacknext&utm_campaign=team-122" class="header-btn">
         <span>Войти</span>
         <span class="arrow">→</span>
@@ -283,44 +440,66 @@
 
     <!-- Hero -->
     <section class="hero">
-      <span class="badge">🔥 ЕНТ 2026 / Поступление без стресса</span>
-      <h1>Хватит гадать, куда поступить с твоими баллами</h1>
-      <p>Пройди минутный интерактив, узнай свои шансы на грант и подбери вуз мечты за пару кликов.</p>
+      <span class="badge">🔥 ЕНТ 2026 / Твой идеальный старт</span>
+      <h1>Куда пройти с твоими баллами? Узнай за 10 секунд</h1>
+      <p>Прокрути ползунок, нажми на предмет и ИИ мгновенно покажет реальные шансы на грант и вузы Казахстана.</p>
     </section>
 
-    <!-- Interactive Widget -->
+    <!-- Gamified Interactive Card -->
     <div class="interactive-card">
       <div class="card-title">
-        <span>⚡</span> Выбери профильный предмет ЕНТ:
+        <div class="glow-dot"></div>
+        <span>🎮 Интерактивный Калькулятор Шансов</span>
       </div>
+
+      <!-- Live score slider -->
+      <div class="slider-box">
+        <div class="slider-header">
+          <span>Твой ожидаемый балл ЕНТ:</span>
+          <span class="score-value" id="scoreDisplay">85 баллов</span>
+        </div>
+        <input type="range" id="scoreInput" min="50" max="140" value="85" oninput="updateScore()">
+      </div>
+
+      <div style="font-size: 13px; font-weight: 700; margin-bottom: 8px; color: var(--muted);">
+        📐 Выбери свой профильный предмет:
+      </div>
+
       <div class="options-grid">
-        <button class="opt-btn" onclick="selectSubject('math')">📐 Мат / Физика</button>
-        <button class="opt-btn" onclick="selectSubject('it')">💻 IT / Инфо</button>
-        <button class="opt-btn" onclick="selectSubject('bio')">🧬 Био / Химия</button>
-        <button class="opt-btn" onclick="selectSubject('human')">🌍 Гуманитарные</button>
+        <button class="opt-btn" onclick="selectSubject('math', this)">📐 Мат / Физика</button>
+        <button class="opt-btn" onclick="selectSubject('it', this)">💻 IT / Инфо</button>
+        <button class="opt-btn" onclick="selectSubject('bio', this)">🧬 Био / Химия</button>
+        <button class="opt-btn" onclick="selectSubject('human', this)">🌍 Гуманитарные</button>
       </div>
+
+      <!-- AI Live Chat Response -->
       <div class="interactive-result" id="quizResult">
-        👆 Нажми на своё направление выше, чтобы увидеть актуальные вузы и проходные баллы на грант.
+        <span id="aiMessage">🤖 <b>Венти:</b> "Привет! Давай прикинем твои шансы. Передвинь ползунок баллов и кликни по предмету!"</span>
+        <div class="ai-typing-indicator" id="typing">
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </div>
       </div>
     </div>
 
     <!-- Features -->
     <div class="features-box">
-      <h3>Что тебя ждет внутри платформы:</h3>
+      <h3>Что ты найдешь внутри платформы:</h3>
       
       <div class="feat-row">
         <div class="feat-icon">🎯</div>
         <div class="feat-text">
           <h4>Точный профориент-тест</h4>
-          <p>Поможет выбрать профессию будущего, а не то, что навязывают взрослые.</p>
+          <p>Поможет выбрать ту самую профессию будущего, а не то, что советуют.</p>
         </div>
       </div>
 
       <div class="feat-row">
         <div class="feat-icon">📊</div>
         <div class="feat-text">
-          <h4>Калькулятор грантов ЕНТ</h4>
-          <p>Мгновенно покажет твои реальные шансы на бесплатное обучение.</p>
+          <h4>Анализатор грантов</h4>
+          <p>Моментально покажет твои реальные шансы на бесплатную учебу.</p>
         </div>
       </div>
 
@@ -328,43 +507,106 @@
         <div class="feat-icon">🤖</div>
         <div class="feat-text">
           <h4>ИИ-помощник Venti</h4>
-          <p>Ответит на любой вопрос про поступление, общежития и подготовку к экзаменам.</p>
+          <p>Разложит по полочкам всё про общежития, вузы и ЕНТ.</p>
         </div>
       </div>
     </div>
 
     <!-- CTA Box -->
     <div class="cta-box">
-      <h2>Забери свой персональный план поступления</h2>
-      <p>Регистрация займет меньше 1 минуты (доступен вход через Google в 1 клик).</p>
+      <h2>Забери свой пошаговый план поступления</h2>
+      <p>Регистрация займет меньше 1 минуты (доступен быстрый вход через Google).</p>
       
-      <!-- ВАЖНО: Замени team-017 на реальный номер своей команды -->
+      <!-- ВАЖНО: Замени team-122 на твой реальный номер команды -->
       <a href="https://ventorme.ai/register?utm_source=hacknext&utm_campaign=team-122" class="btn-main">
-        🚀 Зарегистрироваться и начать
+        🚀 Зарегистрироваться и начать бесплатно
       </a>
     </div>
 
     <div class="footer-note">
-      Ventorme.ai × Hacknext • Разработано для победы в хакатоне
+      Ventorme.ai × Hacknext • Разработано командой 122 для победы в хакатоне
     </div>
   </div>
 
   <script>
-    const contents = {
-      math: "📐 <b>Инженерное / Физико-математическое направление:</b> Отличный выбор! С этими предметами открыты двери в <b>АИТУ (Astana IT University), ЕНУ им. Гумилева, КБТУ и Сатпаев университет</b>. Высокие шансы на грант при баллах ЕНТ от 105+.",
-      it: "💻 <b>IT и Программирование:</b> Самое востребованное направление. Топовые вузы для тебя: <b>Astana IT University (АИТУ), МУИТ (IITU), Satbayev University</b>. Платформа поможет подготовиться к профильной информатике.",
-      bio: "🧬 <b>Медицина и Биотехнологии:</b> Высокая конкуренция на гранты. Основные направления: <b>МУА (Медицинский университет Астана), КазНМУ им. Асфендиярова, НАО «Медицинский университет Семей»</b>. Потребуется крепкий балл по биологии и химии.",
-      human: "🌍 <b>Иностранные языки, Международные отношения и Право:</b> Отлично подойдут <b>ЕНУ им. Гумилева, КазНУ им. аль-Фараби, КИМЭП</b>. Платформа поможет рассчитать порог по истории Казахстана и грамотно составить мотивационное письмо."
+    let currentSubject = '';
+    
+    function updateScore() {
+      const score = document.getElementById('scoreInput').value;
+      document.getElementById('scoreDisplay').innerText = score + ' баллов';
+      if(currentSubject) {
+        evaluateChances(currentSubject, score);
+      }
+    }
+
+    const data = {
+      math: {
+        title: "📐 Мат / Физика",
+        vuz: "<b>АИТУ (Astana IT University), ЕНУ им. Гумилева, КБТУ и Сатпаев университет</b>.",
+        rec: "При твоих баллах стоит обратить внимание на инженерные, авиационные и строительные факультеты."
+      },
+      it: {
+        title: "💻 IT / Информатика",
+        vuz: "<b>Astana IT University (АИТУ), МУИТ (IITU) и Satbayev University</b>.",
+        rec: "Самое горячее направление! Обрати внимание на Cybersecurity, Computer Science и Data Science."
+      },
+      bio: {
+        title: "🧬 Био / Химия",
+        vuz: "<b>Медицинский университет Астана (МУА), КазНМУ им. Асфендиярова, Медицинский Университет Семей</b>.",
+        rec: "Очень высокая конкуренция. Рекомендуем также рассмотреть Биотехнологии и Фармацевтику."
+      },
+      human: {
+        title: "🌍 Гуманитарные (Иностр. язык, Право, Журналистика)",
+        vuz: "<b>ЕНУ им. Гумилева, КазНУ им. аль-Фараби, КИМЭП, КАЗГЮУ</b>.",
+        rec: "Отличный выбор! Сделай упор на историю и грамотно составь мотивационное письмо."
+      }
     };
 
-    function selectSubject(type) {
-      // Подсветка активной кнопки
+    function selectSubject(type, element) {
+      // Клик по кнопке (визуальное выделение)
       document.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('active'));
-      event.currentTarget.classList.add('active');
+      element.classList.add('active');
+      currentSubject = type;
 
-      // Вывод уникального текста под каждое направление
-      const resultBox = document.getElementById('quizResult');
-      resultBox.innerHTML = contents[type] + "<br><br><span style='color: var(--accent); font-weight: 700;'>👉 Зарегистрируйся в системе, чтобы закрепить за собой список вузов!</span>";
+      // Запуск симуляции ИИ-печатания
+      const aiMessage = document.getElementById('aiMessage');
+      const typing = document.getElementById('typing');
+      aiMessage.style.display = 'none';
+      typing.style.display = 'flex';
+
+      setTimeout(() => {
+        typing.style.display = 'none';
+        aiMessage.style.display = 'block';
+        const score = document.getElementById('scoreInput').value;
+        evaluateChances(type, score);
+      }, 500);
+    }
+
+    function evaluateChances(type, score) {
+      const selected = data[type];
+      let chanceText = '';
+      let color = '';
+
+      if (score < 75) {
+        chanceText = "⚠️ <b>Шанс на грант: Высокий риск.</b> На популярные направления пройти будет сложно. Советуем поднажать в подготовке к ЕНТ. Зато на региональные вузы и менее востребованные специальности проходной балл ниже.";
+        color = '#F59E0B'; // Оранжевый
+      } else if (score >= 75 && score < 100) {
+        chanceText = "⚡ <b>Шанс на грант: Средний.</b> Отличная база! Есть неплохие шансы на грант во многие вузы РК, если грамотно выбрать специальность (например, машиностроение, материаловедение или педагогика).";
+        color = '#3B82F6'; // Синий
+      } else {
+        chanceText = "🔥 <b>Шанс на грант: Очень Высокий!</b> Поздравляем, ты в лидерах. Можешь смело подаваться в топовые национальные и профильные университеты!";
+        color = '#10B981'; // Зеленый
+      }
+
+      const resultBox = document.getElementById('aiMessage');
+      resultBox.innerHTML = `
+        <span style="color:${color}; font-weight:800;">${selected.title}</span><br>
+        🎯 При баллах <b>${score}</b> твои перспективы:<br>
+        ${chanceText}<br><br>
+        🏛 <b>Рекомендуемые вузы:</b> ${selected.vuz}<br><br>
+        💡 <b>Совет от ИИ Venti:</b> ${selected.rec}<br><br>
+        <span style='color: var(--accent); font-weight: 800;'>👉 Переходи на Ventorme.ai, мы проанализируем твою комбинацию предметов глубже!</span>
+      `;
     }
   </script>
 </body>
